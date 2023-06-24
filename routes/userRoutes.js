@@ -8,10 +8,8 @@ router.get('/add-user',userController.getAdduser);
 
 router.post('/add-user',userController.postAddUser);
 
-router.get('/edit-user/:productId',userController.getEdituser);
+router.get('/edit-user/:userId',userController.getEdituser);
 
-router.post('/edit-user',userController.postEditUser);
-
-router.post('/delete-user',userController.deleteUser);
+router.delete('/delete-user/:userId',userController.deleteUser);
 
 module.exports = router;

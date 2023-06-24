@@ -1,29 +1,33 @@
 const Users = require('../models/users');
 
-exports.getAdduser = (req,res) =>{
-    Users.findAll()
-    .then(users=>{
+exports.getAdduser =async (req,res) =>{
+    try{
+        const users = await Users.findAll();
         res.json(users);
-    }).catch(err=> console.log(err))
+    }catch(err){console.log(err)};
 }
-exports.postAddUser = (req,res)=>{
-    const name = req.body.name;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    Users.create({
-        name:name,
-        email:email,
-        phone:phone
-    })
-    .then(()=> console.log('user added'))
-    .catch((err)=> console.log(err));
-}
-exports.getEdituser = (req,res)=>{
+exports.postAddUser = async (req,res)=>{
+    try{
+        const user =await Users.create({...req.body});
+        res.json(user);
+    }catch(err){console.log(err)};
     
 }
-exports.postEditUser = (req,res)=>{
-    
+exports.getEdituser = async (req,res)=>{
+    const userId = req.params.userId;
+    try{
+        const user =await Users.findByPk(userId)
+        res.json(user);
+    }catch(err){console.log(err)};
 }
-exports.deleteUser = (req,res)=>{
+
+exports.deleteUser =async (req,res)=>{
+    const userId = req.params.userId;
+    try{
+        const user = await Users.findByPk(userId)
+        await user.destroy();
+        res.sendStatus(200);
+    }catch(err){console.log(err)};
     
+
 }
